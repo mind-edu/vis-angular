@@ -77,9 +77,11 @@
     var edges = null;
     var network = null;
     // randomly create some nodes and edges
+    // 随机产生的数据
     var data = getScaleFreeNetwork(25);
     var seed = 2;
 
+    // 设置默认的语言包
     function setDefaultLocale() {
       var defaultLocal = navigator.language;
       var select = document.getElementById('locale');
@@ -92,6 +94,7 @@
       }
     }
 
+    // 清空界面
     function destroy() {
       if (network !== null) {
         network.destroy();
@@ -99,7 +102,9 @@
       }
     }
 
+    // 画图，渲染出界面
     function draw() {
+      // 在渲染界面之前，先清空界面
       destroy();
       nodes = [];
       edges = [];
@@ -112,11 +117,13 @@
         manipulation: {
           addNode: function (data, callback) {
             // filling in the popup DOM elements
+            // 重新赋给值的，按钮命名
             document.getElementById('node-operation').innerHTML = "Add Node";
             editNode(data, clearNodePopUp, callback);
           },
           editNode: function (data, callback) {
             // filling in the popup DOM elements
+            // 重新赋给值的，按钮命名
             document.getElementById('node-operation').innerHTML = "Edit Node";
             editNode(data, cancelNodeEdit, callback);
           },
@@ -128,19 +135,23 @@
                 return;
               }
             }
+            // 重新赋给值的，按钮命名
             document.getElementById('edge-operation').innerHTML = "Add Edge";
             editEdgeWithoutDrag(data, callback);
           },
           editEdge: {
             editWithoutDrag: function(data, callback) {
+              // 重新赋给值的，按钮命名
               document.getElementById('edge-operation').innerHTML = "Edit Edge";
               editEdgeWithoutDrag(data,callback);
             }
           }
         }
       };
+      // 在浏览器的控制台打印输出 network，可以看到各种属性的
+      // container 和 options 都有定义的，var container 和 var options
       network = new vis.Network(container, data, options);
-    }
+    } // draw函数结束
 
     function editNode(data, cancelAction, callback) {
       document.getElementById('node-label').value = data.label;
@@ -212,18 +223,22 @@
 </p>
 
 <p>
+  <!-- 这里是语言包，能显示不同的语言 -->
   <label for="locale">Select a locale:</label>
+  <!-- draw()函数内的操作将整个界面给渲染出来的 -->
   <select id="locale" onchange="draw();">
     <option value="en">en</option>
-    <option value="de">de</option>
+    <!-- <option value="de">de</option>
     <option value="es">es</option>
     <option value="it">it</option>
     <option value="nl">nl</option>
     <option value="pt-br">pt</option>
-    <option value="ru">ru</option>
-  </select>
+    <option value="ru">ru</option> -->
+  </select> 
 </p>
 
+
+<!-- 这里定义了一系列的id值 :  node-id, node-popUp, node-operation, node-label,edge-cancelButton-->
 <div id="node-popUp">
   <span id="node-operation">node</span> <br>
   <table style="margin:auto;">

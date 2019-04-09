@@ -42455,6 +42455,7 @@ var KamadaKawai = __webpack_require__(238)['default'];
 
 /**
  * Create a network visualization, displaying nodes and edges.
+ * 可视化渲染出界面
  *
  * @param {Element} container   The DOM element in which the Network will
  *                                  be created. Normally a div element.
