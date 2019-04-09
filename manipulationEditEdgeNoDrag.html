@@ -112,6 +112,7 @@
       // create a network
       var container = document.getElementById('mynetwork');
       var options = {
+        interaction:{hover:true}, // 响应事件操作
         layout: {randomSeed:seed}, // just to make sure the layout is the same when the locale is changed
         locale: document.getElementById('locale').value,
         manipulation: {
@@ -151,6 +152,76 @@
       // 在浏览器的控制台打印输出 network，可以看到各种属性的
       // container 和 options 都有定义的，var container 和 var options
       network = new vis.Network(container, data, options);
+
+      // 监控事件
+
+      network.on("click", function (params) {
+          params.event = "[original event]";
+          document.getElementById('eventSpan').innerHTML = '<h2>Click event:</h2>' + JSON.stringify(params, null, 4);
+          console.log('click event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
+      });
+      network.on("doubleClick", function (params) {
+          params.event = "[original event]";
+          document.getElementById('eventSpan').innerHTML = '<h2>doubleClick event:</h2>' + JSON.stringify(params, null, 4);
+      });
+      network.on("oncontext", function (params) {
+          params.event = "[original event]";
+          document.getElementById('eventSpan').innerHTML = '<h2>oncontext (right click) event:</h2>' + JSON.stringify(params, null, 4);
+      });
+      network.on("dragStart", function (params) {
+          // There's no point in displaying this event on screen, it gets immediately overwritten
+          params.event = "[original event]";
+          console.log('dragStart Event:', params);
+          console.log('dragStart event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
+      });
+      network.on("dragging", function (params) {
+          params.event = "[original event]";
+          document.getElementById('eventSpan').innerHTML = '<h2>dragging event:</h2>' + JSON.stringify(params, null, 4);
+      });
+      network.on("dragEnd", function (params) {
+          params.event = "[original event]";
+          document.getElementById('eventSpan').innerHTML = '<h2>dragEnd event:</h2>' + JSON.stringify(params, null, 4);
+          console.log('dragEnd Event:', params);
+          console.log('dragEnd event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
+      });
+      network.on("zoom", function (params) {
+          document.getElementById('eventSpan').innerHTML = '<h2>zoom event:</h2>' + JSON.stringify(params, null, 4);
+      });
+      network.on("showPopup", function (params) {
+          document.getElementById('eventSpan').innerHTML = '<h2>showPopup event: </h2>' + JSON.stringify(params, null, 4);
+      });
+      network.on("hidePopup", function () {
+          console.log('hidePopup Event');
+      });
+      network.on("select", function (params) {
+          console.log('select Event:', params);
+      });
+      network.on("selectNode", function (params) {
+          console.log('selectNode Event:', params);
+      });
+      network.on("selectEdge", function (params) {
+          console.log('selectEdge Event:', params);
+      });
+      network.on("deselectNode", function (params) {
+          console.log('deselectNode Event:', params);
+      });
+      network.on("deselectEdge", function (params) {
+          console.log('deselectEdge Event:', params);
+      });
+      network.on("hoverNode", function (params) {
+          console.log('hoverNode Event:', params);
+      });
+      network.on("hoverEdge", function (params) {
+          console.log('hoverEdge Event:', params);
+      });
+      network.on("blurNode", function (params) {
+          console.log('blurNode Event:', params);
+      });
+      network.on("blurEdge", function (params) {
+          console.log('blurEdge Event:', params);
+      });
+
+
     } // draw函数结束
 
     function editNode(data, cancelAction, callback) {
@@ -266,5 +337,7 @@
 <br />
 <div id="mynetwork"></div>
 
+<!-- 渲染事件操作的显示界面 -->
+<pre id="eventSpan"></pre>
 </body>
 </html>

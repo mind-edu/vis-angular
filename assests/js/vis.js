@@ -43350,7 +43350,7 @@ if (typeof CanvasRenderingContext2D !== 'undefined') {
 "use strict";
 
 
-// English
+// English，语言包
 exports['en'] = {
   edit: 'Edit',
   del: 'Delete selected',
