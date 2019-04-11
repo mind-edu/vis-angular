@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "allowJs": true, //增加一行，允许编译JavaScript文件
     "sourceMap": true,
     "declaration": false,
     "module": "es2015",
